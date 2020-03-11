@@ -13,9 +13,9 @@ app.get('/', (req, res) => {
 	pageContent += "<div style='display: flex; flex-direction: column; height: 100%; width: 100%;'>"
 	let path = req.query.dir;
 	if (path == undefined) {
-		let dirPath = "/storage/emulated/0";
+		let dirPath = "?dir=/storage/emulated/0";
 		pageContent += "<input style='width: 200px;'  type='button' onclick='redirect(\"" + dirPath +"\")' value='Internal Storage'></input>"
-		dirPath = __dirname;
+		dirPath = "?dir=" + __dirname;
 		pageContent += "<input style='width: 200px;'  type='button' onclick='redirect(\"" + dirPath +"\")' value='Termux'></input>"
 		res.send(pageContent);
 		return;
