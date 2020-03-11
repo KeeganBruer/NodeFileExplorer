@@ -2,11 +2,11 @@ var fs = require('fs');
 const express = require('express')
 const app = express()
 const port = 3000
- 
-if (process.argv.length <= 2) {
-    console.log("Usage: " + __filename + " path/to/directory");
-    process.exit(-1);
-}
+var os = require( 'os' );
+
+var networkInterfaces = os.networkInterfaces( );
+
+console.log( networkInterfaces );
 
 app.get('/', (req, res) => {
 	let pageContent = "<script>function redirect(url) {window.location.href = url}</script>";
