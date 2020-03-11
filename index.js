@@ -18,7 +18,7 @@ app.get('/', (req, res) => {
 		dirPath = __dirname;
 		pageContent += "<input style='width: 200px;'  type='button' onclick='redirect(\"" + dirPath +"\")' value='" + dirs[i] +"'></input>"
 		res.send(pageContent);
-		break;
+		return;
 	}
 	if (path.indexOf("/") == -1) {
 		path += "/";
