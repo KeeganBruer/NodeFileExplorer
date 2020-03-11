@@ -6,7 +6,11 @@ var os = require( 'os' );
 
 var networkInterfaces = os.networkInterfaces( );
 
+try {
 console.log( networkInterfaces.wlan0[0].address );
+} catch(err) {
+	console.log(networkInterfaces)
+}
 
 app.get('/', (req, res) => {
 	let pageContent = "<script>function redirect(url) {window.location.href = url}</script>";
