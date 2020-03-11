@@ -15,12 +15,6 @@ console.log( networkInterfaces.wlan0[0].address );
 app.get('/', (req, res) => {
 	let path = req.query.dir;
 	if (path == undefined) {
-		let dirPath = "?dir=/storage/emulated/0";
-		let pageContent = "<input style='width: 200px;'  type='button' onclick='redirect(\"" + dirPath +"\")' value='Internal Storage'></input>"
-		dirPath = "?dir=" + "/data/data/com.termux/files/home";
-		pageContent += "<input style='width: 200px;'  type='button' onclick='redirect(\"" + dirPath +"\")' value='Termux'></input>"
-		res.send(pageContent);
-		return;
 		let structure = getPageStructure(__dirname + "/index.html");
 		structure = fillStructure(structure, "[!-DIRECTORIES-!]", () => {
 			let dirs = ["/storage/emulated/0", "/data/data/com.termux/files/home"];
@@ -38,7 +32,8 @@ app.get('/', (req, res) => {
 				pageContent += struct;
 			}
 			return pageContent;
-		});	
+		});
+		res.send(structure);
 	}
 	if (path.indexOf("/") == -1) {
 		path += "/";
