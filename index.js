@@ -21,6 +21,24 @@ app.get('/', (req, res) => {
 		pageContent += "<input style='width: 200px;'  type='button' onclick='redirect(\"" + dirPath +"\")' value='Termux'></input>"
 		res.send(pageContent);
 		return;
+		let structure = getPageStructure(__dirname + "/index.html");
+		structure = fillStructure(structure, "[!-DIRECTORIES-!]", () => {
+			let dirs = ["/storage/emulated/0", "/data/data/com.termux/files/home"];
+			let names = ["Internal Storage", "Termux"]
+			let pageContent = "";
+			for (let i in dirs) {
+				let dirPath = "?dir=" + dirs[i];
+				let struct = getPageStructure(__dirname + "/folder.html");
+				struct = fillStructure(struct, "[!-URL-!]", () => {
+					return dirPath;
+				});
+				struct = fillStructure(struct, "[!-NAME-!]", () => {
+					return names[i];
+				});
+				pageContent += struct;
+			}
+			return pageContent;
+		});	
 	}
 	if (path.indexOf("/") == -1) {
 		path += "/";
