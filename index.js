@@ -11,7 +11,7 @@ if (process.argv.length <= 2) {
 app.get('/', (req, res) => {
 	let path = req.query.dir;
 	if (path == undefined) {
-		path = __dirname;
+		path = "/storage/emulated/0";
 	}
 	if (path.indexOf("/") == -1) {
 		path += "/";
