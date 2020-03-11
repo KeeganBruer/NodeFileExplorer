@@ -15,7 +15,7 @@ app.get('/', (req, res) => {
 	if (path == undefined) {
 		let dirPath = "?dir=/storage/emulated/0";
 		pageContent += "<input style='width: 200px;'  type='button' onclick='redirect(\"" + dirPath +"\")' value='Internal Storage'></input>"
-		dirPath = "?dir=" + __dirname;
+		dirPath = "?dir=" + "/data/data/com.termux/files/home";
 		pageContent += "<input style='width: 200px;'  type='button' onclick='redirect(\"" + dirPath +"\")' value='Termux'></input>"
 		res.send(pageContent);
 		return;
