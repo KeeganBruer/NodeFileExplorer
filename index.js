@@ -14,9 +14,9 @@ app.get('/', (req, res) => {
 	let path = req.query.dir;
 	if (path == undefined) {
 		let dirPath = "/storage/emulated/0";
-		pageContent += "<input style='width: 200px;'  type='button' onclick='redirect(\"" + dirPath +"\")' value='" + dirs[i] +"'></input>"
+		pageContent += "<input style='width: 200px;'  type='button' onclick='redirect(\"" + dirPath +"\")' value='Internal Storage'></input>"
 		dirPath = __dirname;
-		pageContent += "<input style='width: 200px;'  type='button' onclick='redirect(\"" + dirPath +"\")' value='" + dirs[i] +"'></input>"
+		pageContent += "<input style='width: 200px;'  type='button' onclick='redirect(\"" + dirPath +"\")' value='Termux'></input>"
 		res.send(pageContent);
 		return;
 	}
