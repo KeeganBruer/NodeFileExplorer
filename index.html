@@ -1,12 +1,59 @@
 <HTML>
 	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 		<script>
 		function redirect(url) {
 			window.location.href = url
 		}
+		window.onload = function(){
+			let droparea = document.getElementById('droparea');
+			window.addEventListener('dragenter', function(e) {
+				document.getElementById('droparea').style.display = "block";
+			});
+			droparea.addEventListener('dragenter', function(e) {
+				e.dataTransfer.dropEffect = 'copy';
+				e.preventDefault();
+			});
+			droparea.addEventListener('dragover', function(e) {
+				e.dataTransfer.dropEffect = 'copy';
+				e.preventDefault()
+				e.stopPropagation()
+			});
+			droparea.addEventListener('dragleave', function(e) {
+				document.getElementById('droparea').style.display = "none";
+			});
+			droparea.addEventListener('drop', (e) => {
+				let dt = e.dataTransfer
+				let files = dt.files
+				var fd = new FormData();    
+				fd.append( 'file', files[0] );
+
+				$.ajax({
+				  url: '/upload',
+				  data: fd,
+				  processData: false,
+				  contentType: false,
+				  type: 'POST',
+				  success: function(data){
+					document.getElementById('droparea').style.display = "none";
+					location.reload();
+				  }
+				});
+			});
+			;['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+			  droparea.addEventListener(eventName, preventDefaults, false)
+			})
+
+			function preventDefaults (e) {
+			  e.preventDefault()
+			  e.stopPropagation()
+			}
+		};
 		</script>
 	</head>
 	<body>
+		<div id="droparea" style="background-color: red; display: none; position: absolute; width: 100%; height:100%;">
+		</div>
 		<div style="display: flex; flex-direction: row;">
 		[!-CURRENTDIRECTORY-!]
 		</div>

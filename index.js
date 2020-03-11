@@ -1,9 +1,11 @@
 var fs = require('fs');
 const express = require('express')
 const app = express()
+var fileupload = require("express-fileupload");
+app.use(fileupload());
 const port = 3000
 var os = require( 'os' );
-
+let currentDirectory = "";
 var networkInterfaces = os.networkInterfaces( );
 
 try {
@@ -35,6 +37,7 @@ app.get('/', (req, res) => {
 		});
 		res.send(structure);
 	}
+	currentDirectory = path;
 	if (path.indexOf("/") == -1) {
 		path += "/";
 	}
@@ -108,6 +111,25 @@ app.get('/', (req, res) => {
 	} catch(err) {
 		res.sendFile(path);
 	}
+});
+
+app.post("/upload", function(req, res)
+{
+    var file;
+
+    if(!req.files)
+    {
+        res.send("File was not found");
+        return;
+    }
+
+    file = req.files.FormFieldName;  // here is the field name of the form
+	res.send("File Uploaded");
+	console.log(currentDirectory + "/" + req.files.file.name);
+	fs.writeFileSync(currentDirectory + "/" + req.files.file.name, req.files.file.data);
+    
+
+
 });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
