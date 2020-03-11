@@ -9,16 +9,21 @@ if (process.argv.length <= 2) {
 }
 
 app.get('/', (req, res) => {
+	let pageContent = "<script>function redirect(url) {window.location.href = url}</script>";
+	pageContent += "<div style='display: flex; flex-direction: column; height: 100%; width: 100%;'>"
 	let path = req.query.dir;
 	if (path == undefined) {
-		path = "/storage/emulated/0";
+		let dirPath = "/storage/emulated/0";
+		pageContent += "<input style='width: 200px;'  type='button' onclick='redirect(\"" + dirPath +"\")' value='" + dirs[i] +"'></input>"
+		dirPath = __dirname;
+		pageContent += "<input style='width: 200px;'  type='button' onclick='redirect(\"" + dirPath +"\")' value='" + dirs[i] +"'></input>"
+		res.send(pageContent);
+		break;
 	}
 	if (path.indexOf("/") == -1) {
 		path += "/";
 	}
 	console.log(path);
-	let pageContent = "<script>function redirect(url) {window.location.href = url}</script>";
-	pageContent += "<div style='display: flex; flex-direction: column; height: 100%; width: 100%;'>"
 	let backPath = path.split("\\").slice(0, path.split("\\").length-1).join("/");
 	if (backPath == "") {
 		backPath = path.split("/").slice(0, path.split("/").length-1).join("/");
