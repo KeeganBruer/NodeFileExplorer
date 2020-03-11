@@ -34,16 +34,21 @@ app.get('/', (req, res) => {
 	}
 	let dirPath = "?dir=" + backPath;
 	pageContent += "<input style='width: 200px;' type='button' onclick='redirect(\"" + dirPath +"\")' value='../'></input>"
-	
-	let dirs = getDirectories(path);
-	for (let i in dirs) {
-		let dirPath = "?dir=" + path.split("\\").join("/") + "/" + dirs[i];
-		pageContent += "<input style='width: 200px;'  type='button' onclick='redirect(\"" + dirPath +"\")' value='" + dirs[i] +"'></input>"
-	}
-	let files = getFiles(path);
-	for (let i in files) {
-		let filePath = "localhost:3000/?dir=" + path.split("\\").join("/") + "\\" + files[i];
-		pageContent += "<input style='width: 200px;' type='button' onclick='redirect(\"" + filePath +"\")' value='" + files[i] +"'></input>"
+	try {
+		let dirs = getDirectories(path);
+		for (let i in dirs) {
+			let dirPath = "?dir=" + path.split("\\").join("/") + "/" + dirs[i];
+			pageContent += "<input style='width: 200px;'  type='button' onclick='redirect(\"" + dirPath +"\")' value='" + dirs[i] +"'></input>"
+		}
+		let files = getFiles(path);
+		for (let i in files) {
+			let filePath = "?dir=" + path.split("\\").join("/") + "/" + files[i];
+			pageContent += "<input style='width: 200px;' type='button' onclick='redirect(\"" + filePath +"\")' value='" + files[i] +"'></input>"
+		}
+	} catch (err) {
+		console.log("sending File: " + path);
+		res.sendFile(path);
+		return;
 	}
 	pageContent += "</div>";
 	res.send(pageContent)
